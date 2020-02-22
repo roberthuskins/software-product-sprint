@@ -5,14 +5,19 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <b><h1>Portfolio</h1></b>
+      <img id = "profile" src = "/images/rob_hoodie.png"></img>
+      <p>Hi, I'm Rob and this is my portfolio. I'm a sophomore CS student at CSUMB, feel free to learn more about me below</p>
+      <p>Click the button to view a random project of mine!</p>
+      <img id = "github" src = "images/GitHub_Logo.png"></img><br>
+      <button onclick="randomProject()">Click me!</button>
+
+      <h2>Lichess Puzzle of the Day</h2>
+      <iframe src="https://lichess.org/training/frame?theme=wood&bg=light" style="width: 400px; height: 444px;" allowtransparency="true" frameborder="0"></iframe>
     </div>
   </body>
 </html>

@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+function randomProject() {
+  const projects = [
+    'https://github.com/roberthuskins/chess_position_finder',
+    'https://github.com/roberthuskins/teambot.py',
+    'https://github.com/roberthuskins/pokepastebin'
+  ];
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const project = projects[Math.floor(Math.random() * projects.length)];
+  window.open(project, '_blank');
 }
