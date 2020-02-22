@@ -14,10 +14,12 @@
 
 
 function randomProject() {
-  const projects =
-      ['https://github.com/roberthuskins/chess_position_finder', 'https://github.com/roberthuskins/teambot.py', 'https://github.com/roberthuskins/pokepastebin'];
+  const projects = [
+    'https://github.com/roberthuskins/chess_position_finder',
+    'https://github.com/roberthuskins/teambot.py',
+    'https://github.com/roberthuskins/pokepastebin'
+  ];
 
   const project = projects[Math.floor(Math.random() * projects.length)];
-  window.open(project, "_blank");
-  
+  window.open(project, '_blank');
 }
