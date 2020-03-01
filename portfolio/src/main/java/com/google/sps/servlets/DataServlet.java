@@ -20,25 +20,45 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+ 
+  private ArrayList<String> comments = new ArrayList<String>();
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ArrayList<String> comments = new ArrayList();
-        comments.add("Hello");
-        comments.add("What's up");
-        comments.add("Beep boop");
+        // ArrayList<String> comments = new ArrayList();
+        // comments.add("Hello");
+        // comments.add("What's up");
+        // comments.add("Beep boop");
         String json = convertToJsonUsingGson(comments);
         response.setContentType("application/json;");
         response.getWriter().println(json);
   }
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String comment = getParameter(request, "user_comment","");
+    comments.add(comment);
+    System.out.println("new comment: " + comment);
+    System.out.println("There are (" + comments.size() + ") comments.");
+    response.sendRedirect("/index.html");
+  }
 
-private String convertToJsonUsingGson(ArrayList a) {
-    Gson gson = new Gson();
-    String json = gson.toJson(a);
-    return json;
+    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+        String value = request.getParameter(name);
+        if (value == null) {
+            return defaultValue;
+        }
+        return value;
     }
+    private String convertToJsonUsingGson(ArrayList<String> a) {
+        Gson gson = new Gson();
+        String json = gson.toJson(a);
+        return json;
+        }
 }
