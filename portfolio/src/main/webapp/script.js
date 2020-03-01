@@ -24,10 +24,18 @@ function randomProject() {
   window.open(project, '_blank');
 }
 
-function getComment() {
-fetch('/data')  // sends a request to /my-data-url
-.then(response => response.json()) // parses the response as JSON
-.then((myObject) => { // now we can reference the fields in myObject!
-  console.log(myObject[Math.floor(Math.random() * myObject.length)])
-})
+function getComments() {
+    output = "";
+    fetch('/data')  // sends a request to /my-data-url
+    .then(response => response.json()) // parses the response as JSON
+    .then((myObject) => { // now we can reference the fields in myObject!
+    var i;
+ 
+    for (i =0; i < myObject.length; i++) {
+        output += myObject[i];
+        output += "\n";
+    }
+    const commentsContainer = document.getElementById('comments');
+    commentsContainer.innerText = output;
+    });
 };

@@ -19,6 +19,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -29,13 +35,20 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
  
-  private ArrayList<String> comments = new ArrayList<String>();
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // ArrayList<String> comments = new ArrayList();
+        ArrayList<String> comments = new ArrayList();
         // comments.add("Hello");
         // comments.add("What's up");
         // comments.add("Beep boop");
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("Comment");
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+            comments.add((String)entity.getProperty("text"));
+        }
+        System.out.println(comments);
+        System.out.println("Just printed out comments arr");
         String json = convertToJsonUsingGson(comments);
         response.setContentType("application/json;");
         response.getWriter().println(json);
@@ -43,9 +56,10 @@ public class DataServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String comment = getParameter(request, "user_comment","");
-    comments.add(comment);
-    System.out.println("new comment: " + comment);
-    System.out.println("There are (" + comments.size() + ") comments.");
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Entity newComment = new Entity("Comment");
+    newComment.setProperty("text", comment);
+    datastore.put(newComment);
     response.sendRedirect("/index.html");
   }
 
