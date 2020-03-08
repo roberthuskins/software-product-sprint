@@ -25,17 +25,13 @@ function randomProject() {
 }
 
 function getComments() {
-  output = '';
-  fetch('/data')                          
-      .then(response => response.json()) 
-      .then((jsonData) => {  
-        var i;
-
-        for (i = 0; i < jsonData.length; i++) {
-          output += jsonData[i];
-          output += '\n';
-        }
-        const commentsContainer = document.getElementById('comments');
-        commentsContainer.innerText = output;
-      });
+    fetch('/data').then(response => response.json()).then((jsonData) => {
+    output = '';
+    for (var i = 0; i < jsonData.length; i++) {
+      output += jsonData[i];
+      output += '\n';
+    }
+    const commentsContainer = document.getElementById('comments');
+    commentsContainer.innerText = output;
+  });
 };
