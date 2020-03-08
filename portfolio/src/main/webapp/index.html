@@ -11,11 +11,24 @@
     <div id="content">
       <b><h1>Portfolio</h1></b>
       <img id = "profile" src = "/images/rob_hoodie.png"></img>
-      <p>Hi, I'm Rob and this is my portfolio. I'm a sophomore CS student at CSUMB, feel free to learn more about me below</p>
+      <div id = "description">
+      <p>Hi, I'm Rob and this is my portfolio. I'm a sophomore CS student at CSUMB.</p> 
+      <p>Feel free to learn more about me below.</p><br>
       <p>Click the button to view a random project of mine!</p>
       <img id = "github" src = "images/GitHub_Logo.png"></img><br>
       <button onclick="randomProject()">Click me!</button>
-
+      <br><br>
+      <div id = "form">
+           <form action="/data" method="POST">
+                <p>Your Comment:</p>
+                <textarea name="user_comment">Epic Victory Royale</textarea><br>
+                <input type="submit" />
+      </div>
+      <script>getComments();</script>
+      <div id = "comments">
+          
+      </div>
+      <br>
       <h2>Lichess Puzzle of the Day</h2>
       <iframe src="https://lichess.org/training/frame?theme=wood&bg=light" style="width: 400px; height: 444px;" allowtransparency="true" frameborder="0"></iframe>
     </div>

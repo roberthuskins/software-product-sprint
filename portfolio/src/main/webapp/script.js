@@ -23,3 +23,15 @@ function randomProject() {
   const project = projects[Math.floor(Math.random() * projects.length)];
   window.open(project, '_blank');
 }
+
+function getComments() {
+    fetch('/data').then(response => response.json()).then((jsonData) => {
+    output = '';
+    for (var i = 0; i < jsonData.length; i++) {
+      output += jsonData[i];
+      output += '\n';
+    }
+    const commentsContainer = document.getElementById('comments');
+    commentsContainer.innerText = output;
+  });
+};

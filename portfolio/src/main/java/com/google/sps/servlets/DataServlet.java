@@ -14,7 +14,15 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +31,39 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+  private DatastoreService datastore;
+  @Override
+  public void init() {
+    datastore = DatastoreServiceFactory.getDatastoreService();
+  }
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Robert!</h1>");
+    ArrayList<String> comments = new ArrayList();
+    Query query = new Query("Comment");
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+      comments.add((String) entity.getProperty("text"));
+    }
+    String json = convertToJson(comments);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String comment = getParameter(request, "user_comment", "");
+    Entity newComment = new Entity("Comment");
+    newComment.setProperty("text", comment);
+    datastore.put(newComment);
+    response.sendRedirect("/index.html");
+  }
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    return value == null ? defaultValue : value;
+  }
+  private String convertToJson(ArrayList<String> a) {
+    Gson gson = new Gson();
+    String json = gson.toJson(a);
+    return json;
   }
 }
