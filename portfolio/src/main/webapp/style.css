@@ -3,8 +3,18 @@
   margin-right: auto;
   width: 650px;
   font-family: 'Roboto', serif;
-  background-color: lightgoldenrodyellow;
+  background-color: oldlace;
   padding: 20px;
+}
+
+#chart-container {
+    margin-top:30px;
+}
+
+#comments {
+    background-color: lightgrey;
+    padding: 20px;
+    margin-top: 30px;
 }
 
 #github {
